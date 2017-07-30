@@ -1,0 +1,25 @@
+FetchQuestion
+/fetch					POST
+/fetch/testid/questions/		GET, DELETE
+/fetch/testid/questions/question	GET, PUT, DELETE
+
+Question
+/questions				GET, POST, DELETE
+/questions/{qno}			GET, PUT, DELETE
+
+Options
+/questions/{qno}/options		GET, POST, DELETE
+/questions/{qno}/options/{optno}	GET, PUT, DELETE
+
+Result
+/results/				GET, Post, DELETE
+/results/tests/{testId}			GET, DELETE
+/results/students/{prn}			GET, DELETE
+
+Schedule
+tests/{testId}/schedules/		GET, POST, DELETE
+tests/{testId}/schedules/{scheduleId}	GET, PUT, DELETE
+
+Test
+tests/							GET, POST, DELETE
+tests/{testId}/					GET, PUT, DELETE
