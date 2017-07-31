@@ -9,6 +9,10 @@ public class ErrorMessage {
 	private int errorCode;
 	private String documentation;
 	
+	public ErrorMessage() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public ErrorMessage(String errorMessage, int errorCode, String documentation) {
 		// TODO Auto-generated constructor stub
 		this.errorMessage = errorMessage;
