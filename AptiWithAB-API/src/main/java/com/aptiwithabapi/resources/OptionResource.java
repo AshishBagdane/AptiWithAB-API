@@ -28,13 +28,13 @@ public class OptionResource {
 	}
 	
 	@GET
-	public List<Option> getAllOptionsFor(@PathParam("qnumber") int qnumber) {
+	public List<Option> getAllOptionsFor(@PathParam("qnumber") long qnumber) {
 		return service.getAllOptionsFor(qnumber);
 	}
 	
 	@GET
 	@Path("/{optnumber}")
-	public Option getOptionFor(@PathParam("qnumber") int qnumber, @PathParam("optnumber") int optnumber) {
+	public Option getOptionFor(@PathParam("qnumber") long qnumber, @PathParam("optnumber") int optnumber) {
 		return service.getOptionFor(qnumber, optnumber);
 	}
 	
@@ -45,18 +45,18 @@ public class OptionResource {
 	
 	@PUT
 	@Path("/{optnumber}")
-	public Option update(@PathParam("qnumber") int qnumber, @PathParam("optnumber") int optnumber, Option option) {
+	public Option update(@PathParam("qnumber") long qnumber, @PathParam("optnumber") int optnumber, Option option) {
 		return service.update(qnumber, optnumber, option);
 	}
 	
 	@DELETE
-	public boolean delete(@PathParam("qnumber") int qnumber) {
+	public boolean delete(@PathParam("qnumber") long qnumber) {
 		return service.delete(qnumber);
 	}
 	
 	@DELETE
 	@Path("/{optnumber}")
-	public Option delete(@PathParam("qnumber") int qnumber, @PathParam("optnumber") int optnumber) {
+	public Option delete(@PathParam("qnumber") long qnumber, @PathParam("optnumber") int optnumber) {
 		return service.delete(qnumber, optnumber);
 	}
 }

@@ -35,7 +35,7 @@ public class TestResource {
 	
 	@GET
 	@Path("/{testId}")
-	public Test getTestBy(@PathParam("testId") int testId) {
+	public Test getTestBy(@PathParam("testId") long testId) {
 		return service.getTestBy(testId);
 	}
 	
@@ -46,7 +46,7 @@ public class TestResource {
 	
 	@PUT
 	@Path("/{testId}")
-	public Test update(@PathParam("testId") int testId, Test test) {
+	public Test update(@PathParam("testId") long testId, Test test) {
 		return service.update(testId, test);
 	}
 	
@@ -57,7 +57,7 @@ public class TestResource {
 	
 	@DELETE
 	@Path("/{testId}")
-	public Test delete(@PathParam("testId") int testId) {
+	public Test delete(@PathParam("testId") long testId) {
 		return service.delete(testId);
 	}
 	

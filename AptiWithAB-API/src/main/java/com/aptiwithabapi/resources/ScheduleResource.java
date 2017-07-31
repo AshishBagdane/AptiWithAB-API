@@ -28,13 +28,13 @@ public class ScheduleResource {
 	}
 	
 	@GET
-	public List<Schedule> getAllSchedulesFor(@PathParam("testId") int testId) {
+	public List<Schedule> getAllSchedulesFor(@PathParam("testId") long testId) {
 		return service.getAllSchedulesFor(testId);
 	}
 	
 	@GET
 	@Path("/{scheduleId}")
-	public Schedule getScheduleFor(@PathParam("testId") int testId, @PathParam("scheduleId") int scheduleId) {
+	public Schedule getScheduleFor(@PathParam("testId") long testId, @PathParam("scheduleId") long scheduleId) {
 		return service.getScheduleFor(testId, scheduleId);
 	}
 	
@@ -45,18 +45,18 @@ public class ScheduleResource {
 	
 	@PUT
 	@Path("/{scheduleId}")
-	public Schedule update(@PathParam("scheduleId") int scheduleId, Schedule schedule) {
+	public Schedule update(@PathParam("scheduleId") long scheduleId, Schedule schedule) {
 		return service.update(scheduleId, schedule);
 	}
 	
 	@DELETE
-	public boolean deleteAllSchedulesFor(@PathParam("testId") int testId) {
+	public boolean deleteAllSchedulesFor(@PathParam("testId") long testId) {
 		return service.deleteAllSchedulesFor(testId);
 	}
 	
 	@DELETE
 	@Path("/{scheduleId}")
-	public Schedule deleteSchedule(@PathParam("scheduleId") int scheduleId) {
+	public Schedule deleteSchedule(@PathParam("scheduleId") long scheduleId) {
 		return service.deleteSchedule(scheduleId);
 	}
 }

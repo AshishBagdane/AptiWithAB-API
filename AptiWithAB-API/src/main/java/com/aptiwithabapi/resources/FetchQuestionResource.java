@@ -29,13 +29,13 @@ public class FetchQuestionResource {
 	}
 	
 	@GET
-	public List<Question> getAllQuestionsFor(@PathParam("testId") int testId) {
+	public List<Question> getAllQuestionsFor(@PathParam("testId") long testId) {
 		return service.getAllQuestionsFor(testId);
 	}
 	
 	@GET
 	@Path("/{qnumber}")
-	public Question getQuestionFor(@PathParam("testId") int testId, @PathParam("qnumber") int qnumber) {
+	public Question getQuestionFor(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber) {
 		return service.getQuestionFor(testId, qnumber);
 	}
 	
@@ -46,18 +46,18 @@ public class FetchQuestionResource {
 	
 	@PUT
 	@Path("/{qnumber}")
-	public FetchQuestion update(@PathParam("testId") int testId, @PathParam("qnumber") int qnumber, FetchQuestion fetchQuestion) {
+	public FetchQuestion update(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber, FetchQuestion fetchQuestion) {
 		return service.update(testId, qnumber, fetchQuestion);
 	}
 	
 	@DELETE
-	public boolean deleteAllQuestionsFrom(@PathParam("testId") int testId) {
+	public boolean deleteAllQuestionsFrom(@PathParam("testId") long testId) {
 		return service.deleteAllQuestionsFrom(testId);
 	}
 	
 	@DELETE
 	@Path("/{qnumber}")
-	public FetchQuestion deleteQuestionFrom(@PathParam("testId") int testId, @PathParam("qnumber") int qnumber) {
+	public FetchQuestion deleteQuestionFrom(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber) {
 		return service.deleteQuestionFrom(testId, qnumber);
 	}
 }

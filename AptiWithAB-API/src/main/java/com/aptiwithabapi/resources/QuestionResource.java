@@ -35,7 +35,7 @@ public class QuestionResource {
 	
 	@GET
 	@Path("/{qnumber}")
-	public Question getQuestionFor(@PathParam("qnumber") int qnumber) {
+	public Question getQuestionFor(@PathParam("qnumber") long qnumber) {
 		return service.getQuestionFor(qnumber);
 	}
 	
@@ -46,13 +46,13 @@ public class QuestionResource {
 	
 	@PUT
 	@Path("/{qnumber}")
-	public Question update(@PathParam("qnumber") int qnumber, Question question) {
+	public Question update(@PathParam("qnumber") long qnumber, Question question) {
 		return service.update(qnumber, question);
 	}
 	
 	@DELETE
 	@Path("/{qnumber}")
-	public Question delete(@PathParam("qnumber") int qnumber) {
+	public Question delete(@PathParam("qnumber") long qnumber) {
 		return service.delete(qnumber);
 	}
 	
