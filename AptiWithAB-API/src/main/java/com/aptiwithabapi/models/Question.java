@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Question implements Comparable<Question> {
 
-	private int no;
+	private long no;
 	private String type;
 	private String statement;
 	private String answer;
@@ -16,11 +16,11 @@ public class Question implements Comparable<Question> {
 	private int marks;
 	private List<Option> options;
 	
-	public int getNo() {
+	public long getNo() {
 		return no;
 	}
 	
-	public void setNo(int no) {
+	public void setNo(long no) {
 		this.no = no;
 	}
 	
@@ -76,6 +76,6 @@ public class Question implements Comparable<Question> {
 
 	@Override
 	public int compareTo(Question that) {
-		return this.getNo() - that.getNo();
+		return Long.compare(this.getNo(), that.getNo());
 	}
 }

@@ -5,15 +5,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Option implements Comparable<Option> {
 
-	private int questionNo;
+	private long questionNo;
 	private byte optionNo;
 	private String option;
 	
-	public int getQuestionNo() {
+	public long getQuestionNo() {
 		return questionNo;
 	}
 	
-	public void setQuestionNo(int questionNo) {
+	public void setQuestionNo(long questionNo) {
 		this.questionNo = questionNo;
 	}
 	

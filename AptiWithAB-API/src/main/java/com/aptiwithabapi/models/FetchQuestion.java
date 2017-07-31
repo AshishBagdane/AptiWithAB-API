@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FetchQuestion {
 
 	private int id;
-	private int testId;
-	private int questionNo;
+	private long testId;
+	private long questionNo;
 	private byte marks;
 	
 	public int getId() {
@@ -18,19 +18,19 @@ public class FetchQuestion {
 		this.id = id;
 	}
 
-	public int getTestId() {
+	public long getTestId() {
 		return testId;
 	}
 	
-	public void setTestId(int testId) {
+	public void setTestId(long testId) {
 		this.testId = testId;
 	}
 	
-	public int getQuestionNo() {
+	public long getQuestionNo() {
 		return questionNo;
 	}
 	
-	public void setQuestionNo(int questionNo) {
+	public void setQuestionNo(long questionNo) {
 		this.questionNo = questionNo;
 	}
 	

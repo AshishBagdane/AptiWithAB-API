@@ -5,26 +5,26 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Schedule {
+public class Schedule implements Comparable<Schedule> {
 
-	private int id;
-	private int testId;
+	private long id;
+	private long testId;
 	private Date date;
 	private boolean isConducted;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public int getTestId() {
+	public long getTestId() {
 		return testId;
 	}
 	
-	public void setTestId(int testId) {
+	public void setTestId(long testId) {
 		this.testId = testId;
 	}
 	
@@ -42,5 +42,11 @@ public class Schedule {
 	
 	public void setConducted(boolean isConducted) {
 		this.isConducted = isConducted;
+	}
+
+	@Override
+	public int compareTo(Schedule that) {
+		// TODO Auto-generated method stub
+		return Long.compare(this.getId(), that.getId());
 	}
 }

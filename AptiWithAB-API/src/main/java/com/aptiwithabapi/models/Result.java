@@ -7,18 +7,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Result implements Comparable<Result> {
 
-	private int id;
+	private long id;
 	private int studentPRN;
-	private int testId;
+	private long testId;
 	private double marks;
 	private String grade;
 	private Date date;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -30,11 +30,11 @@ public class Result implements Comparable<Result> {
 		this.studentPRN = studentPRN;
 	}
 	
-	public int getTestId() {
+	public long getTestId() {
 		return testId;
 	}
 	
-	public void setTestId(int testId) {
+	public void setTestId(long testId) {
 		this.testId = testId;
 	}
 	
@@ -67,7 +67,7 @@ public class Result implements Comparable<Result> {
 		if(this.getTestId() == that.getTestId()) {
 			return this.getStudentPRN() - that.getStudentPRN();
 		} else {
-			return this.getTestId() - that.getTestId();
+			return Long.compare(this.getTestId(), that.getTestId());
 		}
 	}
 }

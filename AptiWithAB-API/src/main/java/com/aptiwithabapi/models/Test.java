@@ -5,17 +5,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Test implements Comparable<Test> {
 
-	private int id;
+	private long id;
 	private String name;
 	private String createdBy;
 	private int duration;
 	private int noOfQuestions;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -53,6 +53,6 @@ public class Test implements Comparable<Test> {
 
 	@Override
 	public int compareTo(Test that) {
-		return this.getId() - that.getId();
+		return Long.compare(this.getId(), that.getId());
 	}
 }
