@@ -7,9 +7,9 @@ import com.aptiwithabapi.models.Test;
 public interface TestDao {
 
 	List<Test> getAllTets();
-	Test getTestBy(int id);
+	Test getTestBy(long id);
 	Test create(Test test);
-	Test update(int id, Test test);
-	Test delete(int id);
+	Test update(long id, Test test);
+	Test delete(long id);
 	boolean deleteAllTests();
 }

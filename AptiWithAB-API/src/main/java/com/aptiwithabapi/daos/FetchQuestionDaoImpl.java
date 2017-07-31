@@ -14,13 +14,13 @@ import com.aptiwithabapi.utility.DatabaseConnection;
 public class FetchQuestionDaoImpl implements FetchQuestionDao {
 
 	@Override
-	public List<Question> getAllQuestionsFor(int testId) {
+	public List<Question> getAllQuestionsFor(long testId) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT Q.NO, Q.TYPE, Q.STATEMENT, Q.ANSWER, FQ.MARKS FROM QUESTION Q, FETCH_QUESTION FQ WHERE Q.NO = FQ.NO AND FQ.TID = ?";
 		List<Question> questions = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
+			statement.setLong(1, testId);
 			ResultSet resultSet = statement.executeQuery();
 			questions = new ArrayList<>();
 			while (resultSet.next()) {
@@ -42,16 +42,16 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 	}
 
 	@Override
-	public Question getQuestionFor(int testId, int qnumber) {
+	public Question getQuestionFor(long testId, long qnumber) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT Q.NO, Q.TYPE, Q.STATEMENT, Q.ANSWER, FQ.MARKS FROM QUESTION Q, FETCH_QUESTION FQ WHERE Q.NO = FQ.NO AND FQ.TID = ? AND FQ.NO = ?";
 		Question question = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
-			statement.setInt(2, qnumber);
+			statement.setLong(1, testId);
+			statement.setLong(2, qnumber);
 			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				question = new Question();
 				question.setNo(resultSet.getInt(1));
 				question.setType(resultSet.getString(2));
@@ -74,8 +74,8 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 		FetchQuestion createdFetchQuestion = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, fetchQuestion.getTestId());
-			statement.setInt(2, fetchQuestion.getQuestionNo());
+			statement.setLong(1, fetchQuestion.getTestId());
+			statement.setLong(2, fetchQuestion.getQuestionNo());
 			statement.setInt(3, fetchQuestion.getMarks());
 			if (statement.executeUpdate() > 0) {
 				createdFetchQuestion = fetchQuestion;
@@ -88,14 +88,14 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 	}
 
 	@Override
-	public FetchQuestion update(int testId, int qnumber, FetchQuestion fetchQuestion) {
+	public FetchQuestion update(long testId, long qnumber, FetchQuestion fetchQuestion) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE FETCH_QUESTION SET MARKS = ? WHERE TID = ? AND NO = ?";
 		FetchQuestion updatedFetchQuestion = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
-			statement.setInt(2, qnumber);
+			statement.setLong(1, testId);
+			statement.setLong(2, qnumber);
 			statement.setInt(3, fetchQuestion.getMarks());
 			if (statement.executeUpdate() > 0) {
 				updatedFetchQuestion = fetchQuestion;
@@ -108,13 +108,13 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 	}
 
 	@Override
-	public boolean deleteAllQuestionsFrom(int testId) {
+	public boolean deleteAllQuestionsFrom(long testId) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM FETCH_QUESTION WHERE TID = ?";
 		boolean status = false;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
+			statement.setLong(1, testId);
 			status = (statement.executeUpdate() > 0);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -124,14 +124,14 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 	}
 
 	@Override
-	public FetchQuestion deleteQuestionFrom(int testId, int qnumber) {
+	public FetchQuestion deleteQuestionFrom(long testId, long qnumber) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM FETCH_QUESTION WHERE TID = ? AND NO = ?";
 		FetchQuestion deletedFetchQuestion = getFetchQuestionFrom(testId, qnumber);
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
-			statement.setInt(2, qnumber);
+			statement.setLong(1, testId);
+			statement.setLong(2, qnumber);
 			if (statement.executeUpdate() <= 0) {
 				deletedFetchQuestion = null;
 			}
@@ -142,13 +142,13 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 		return deletedFetchQuestion;
 	}
 	
-	private FetchQuestion getFetchQuestionFrom(int testId, int qnumber) {
+	private FetchQuestion getFetchQuestionFrom(long testId, long qnumber) {
 		String sql = "SELECT * FROM FETCH_QUESTION WHERE TID = ? AND NO = ?";
 		FetchQuestion fetchQuestion = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
-			statement.setInt(2, qnumber);
+			statement.setLong(1, testId);
+			statement.setLong(2, qnumber);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				fetchQuestion = new FetchQuestion();

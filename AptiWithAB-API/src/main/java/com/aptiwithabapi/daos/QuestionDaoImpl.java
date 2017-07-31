@@ -24,7 +24,7 @@ public class QuestionDaoImpl implements QuestionDao {
 			questions = new ArrayList<>();
 			while (resultSet.next()) {
 				Question question = new Question();
-				question.setNo(resultSet.getInt(1));
+				question.setNo(resultSet.getLong(1));
 				question.setType(resultSet.getString(2));
 				question.setStatement(resultSet.getString(3));
 				question.setAnswer(resultSet.getString(4));
@@ -43,14 +43,15 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public Question getQuestionFor(int qnumber) {
+	public Question getQuestionFor(long qnumber) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM QUESTION WHERE NO = ?";
 		Question question = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setLong(1, qnumber);
 			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				question = new Question();
 				question.setNo(resultSet.getInt(1));
 				question.setType(resultSet.getString(2));
@@ -91,7 +92,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public Question update(int qnumber, Question question) {
+	public Question update(long qnumber, Question question) {
 		// TODO Auto-generated method stub
 		String sql = "UPADET QUESTION SET TYPE = ?, STATEMENT = ?, ANSWER = ?, IMAGEURL = ? WHERE NO = ?";
 		Question updatedQuestion = null;
@@ -101,7 +102,7 @@ public class QuestionDaoImpl implements QuestionDao {
 			statement.setString(2, question.getStatement());
 			statement.setString(3, question.getAnswer());
 			statement.setString(4, question.getImageURL());
-			statement.setInt(5, qnumber);
+			statement.setLong(5, qnumber);
 			if (statement.executeUpdate() > 0) {
 				updatedQuestion = question;
 			}
@@ -113,14 +114,14 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public Question delete(int qnumber) {
+	public Question delete(long qnumber) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM QUESTION WHERE NO = ?";
 		Question deletedQuestion = getQuestionFor(qnumber);
 		if (deletedQuestion != null) {
 			try (Connection connection = DatabaseConnection.getConnection()) {
 				PreparedStatement statement = connection.prepareStatement(sql);
-				statement.setInt(1, qnumber);
+				statement.setLong(1, qnumber);
 				if (statement.executeUpdate() <= 0) {
 					deletedQuestion = null;
 				}

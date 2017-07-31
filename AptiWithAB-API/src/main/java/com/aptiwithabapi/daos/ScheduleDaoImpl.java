@@ -14,19 +14,19 @@ import com.aptiwithabapi.utility.DatabaseConnection;
 public class ScheduleDaoImpl implements ScheduleDao {
 
 	@Override
-	public List<Schedule> getAllSchedulesFor(int testId) {
+	public List<Schedule> getAllSchedulesFor(long testId) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM SCHEDULE WHERE TID = ?";
 		List<Schedule> schedules = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
+			statement.setLong(1, testId);
 			ResultSet resultSet = statement.executeQuery();
 			schedules = new ArrayList<>();
 			while (resultSet.next()) {
 				Schedule schedule = new Schedule();
-				schedule.setId(resultSet.getInt(1));
-				schedule.setTestId(resultSet.getInt(2));
+				schedule.setId(resultSet.getLong(1));
+				schedule.setTestId(testId);
 				schedule.setDate(resultSet.getDate(3));
 				schedule.setConducted(resultSet.getString(4).charAt(0) == '1');
 				
@@ -40,19 +40,19 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public Schedule getScheduleFor(int testId, int scheduleId) {
+	public Schedule getScheduleFor(long testId, long scheduleId) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM SCHEDULE WHERE TID = ? AND ID = ?";
 		Schedule schedule = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
-			statement.setInt(2, scheduleId);
+			statement.setLong(1, testId);
+			statement.setLong(2, scheduleId);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				schedule = new Schedule();
-				schedule.setId(resultSet.getInt(1));
-				schedule.setTestId(resultSet.getInt(2));
+				schedule.setId(scheduleId);
+				schedule.setTestId(testId);
 				schedule.setDate(resultSet.getDate(3));
 				schedule.setConducted(resultSet.getString(4).charAt(0) == '1');
 			}
@@ -70,7 +70,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		Schedule createdSchedule = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, schedule.getTestId());
+			statement.setLong(1, schedule.getTestId());
 			statement.setDate(2, (Date) schedule.getDate());
 			if (statement.executeUpdate() > 0) {
 				createdSchedule = schedule;
@@ -83,16 +83,16 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public Schedule update(int scheduleId, Schedule schedule) {
+	public Schedule update(long scheduleId, Schedule schedule) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE SCHEDULE SET TID = ?, DATE = ?, ISCONDUCTED = ? WHERE ID = ?";
 		Schedule updatedSchedule = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, schedule.getTestId());
+			statement.setLong(1, schedule.getTestId());
 			statement.setDate(2, (Date) schedule.getDate());
 			statement.setString(3, (schedule.getIsConducted()) ? String.valueOf('1') : String.valueOf('0'));
-			statement.setInt(4, scheduleId);
+			statement.setLong(4, scheduleId);
 			if (statement.executeUpdate() > 0) {
 				updatedSchedule = schedule;
 			}
@@ -104,13 +104,13 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public boolean deleteAllSchedulesFor(int testId) {
+	public boolean deleteAllSchedulesFor(long testId) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM SCHEDULE WHERE TID = ?";
 		boolean status = false;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
+			statement.setLong(1, testId);
 			status = (statement.executeUpdate() > 0);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -120,14 +120,14 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	}
 
 	@Override
-	public Schedule deleteSchedule(int scheduleId) {
+	public Schedule deleteSchedule(long scheduleId) {
 		// TODO Auto-generated method stub
-		String sql = "DLETE FROM SCHEDULE WHERE ID = ?";
+		String sql = "DELETE FROM SCHEDULE WHERE ID = ?";
 		Schedule deletedSchedule = getScheduleFor(scheduleId);
 		if (deletedSchedule != null) {
 			try (Connection connection = DatabaseConnection.getConnection()) {
 				PreparedStatement statement = connection.prepareStatement(sql);
-				statement.setInt(1, scheduleId);
+				statement.setLong(1, scheduleId);
 				if (statement.executeUpdate() <= 0) {
 					deletedSchedule = null;
 				}
@@ -139,17 +139,17 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		return deletedSchedule;
 	}
 	
-	private Schedule getScheduleFor(int scheduleId) {
+	private Schedule getScheduleFor(long scheduleId) {
 		String sql = "SELECT * FROM SCHEDULE WHERE ID = ?";
 		Schedule schedule = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, scheduleId);
+			statement.setLong(1, scheduleId);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				schedule = new Schedule();
 				schedule.setId(resultSet.getInt(1));
-				schedule.setTestId(resultSet.getInt(2));
+				schedule.setTestId(resultSet.getLong(2));
 				schedule.setDate(resultSet.getDate(3));
 				schedule.setConducted(resultSet.getString(4).charAt(0) == '1');
 			}

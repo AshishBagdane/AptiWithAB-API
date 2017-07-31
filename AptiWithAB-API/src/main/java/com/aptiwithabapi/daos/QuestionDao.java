@@ -7,9 +7,9 @@ import com.aptiwithabapi.models.Question;
 public interface QuestionDao {
 
 	List<Question>	getAllQuestions();
-	Question		getQuestionFor(int qnumber);
+	Question		getQuestionFor(long qnumber);
 	Question		create(Question question);
-	Question		update(int qnumber, Question question);
-	Question		delete(int qnumber);
+	Question		update(long qnumber, Question question);
+	Question		delete(long qnumber);
 	boolean			delete();
 }

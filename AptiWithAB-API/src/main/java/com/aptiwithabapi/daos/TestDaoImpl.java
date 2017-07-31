@@ -23,7 +23,7 @@ public class TestDaoImpl implements TestDao {
 			tests = new ArrayList<>();
 			while (resultSet.next()) {
 				Test test = new Test();
-				test.setId(resultSet.getInt(1));
+				test.setId(resultSet.getLong(1));
 				test.setName(resultSet.getString(2));
 				test.setCreatedBy(resultSet.getString(3));
 				test.setDuration(resultSet.getInt(4));
@@ -39,17 +39,17 @@ public class TestDaoImpl implements TestDao {
 	}
 
 	@Override
-	public Test getTestBy(int id) {
+	public Test getTestBy(long id) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM TEST WHERE ID = ?";
 		Test test = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, id);
+			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				test = new Test();
-				test.setId(resultSet.getInt(1));
+				test.setId(resultSet.getLong(1));
 				test.setName(resultSet.getString(2));
 				test.setCreatedBy(resultSet.getString(3));
 				test.setDuration(resultSet.getInt(4));
@@ -82,7 +82,7 @@ public class TestDaoImpl implements TestDao {
 	}
 
 	@Override
-	public Test update(int id, Test test) {
+	public Test update(long id, Test test) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE TEST SET NAME = ?, CREATEDBY = ?, DURATION = ?, NOOFQUESTIONS = ? WHERE ID = ?";
 		if (getTestBy(id) != null) {
@@ -92,7 +92,7 @@ public class TestDaoImpl implements TestDao {
 				statement.setString(2, test.getCreatedBy());
 				statement.setInt(3, test.getDuration());
 				statement.setInt(4, test.getNoOfQuestions());
-				statement.setInt(5, test.getId());
+				statement.setLong(5, test.getId());
 				if (statement.executeUpdate() <= 0) {
 					test = null;
 				}
@@ -104,13 +104,13 @@ public class TestDaoImpl implements TestDao {
 	}
 
 	@Override
-	public Test delete(int id) {
+	public Test delete(long id) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM TEST WHERE ID = ?";
 		Test test = getTestBy(id);
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, id);
+			statement.setLong(1, id);
 			if (statement.executeUpdate() <= 0) {
 				test = null;
 			}

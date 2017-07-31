@@ -24,9 +24,9 @@ public class ResultDaoImpl implements ResultDao {
 			results = new ArrayList<>();
 			while (resultSet.next()) {
 				Result result = new Result();
-				result.setId(resultSet.getInt(1));
+				result.setId(resultSet.getLong(1));
 				result.setStudentPRN(resultSet.getInt(2));
-				result.setTestId(resultSet.getInt(3));
+				result.setTestId(resultSet.getLong(3));
 				result.setMarks(resultSet.getDouble(4));
 				result.setGrade(resultSet.getString(5));
 				result.setDate(resultSet.getDate(6));
@@ -41,20 +41,20 @@ public class ResultDaoImpl implements ResultDao {
 	}
 
 	@Override
-	public List<Result> getAllResultsForTest(int testId) {
+	public List<Result> getAllResultsForTest(long testId) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM RESULT WHERE TID = ?";
 		List<Result> results = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
+			statement.setLong(1, testId);
 			ResultSet resultSet = statement.executeQuery();
 			results = new ArrayList<>();
 			while (resultSet.next()) {
 				Result result = new Result();
-				result.setId(resultSet.getInt(1));
+				result.setId(resultSet.getLong(1));
 				result.setStudentPRN(resultSet.getInt(2));
-				result.setTestId(resultSet.getInt(3));
+				result.setTestId(testId);
 				result.setMarks(resultSet.getDouble(4));
 				result.setGrade(resultSet.getString(5));
 				result.setDate(resultSet.getDate(6));
@@ -80,9 +80,9 @@ public class ResultDaoImpl implements ResultDao {
 			results = new ArrayList<>();
 			while (resultSet.next()) {
 				Result result = new Result();
-				result.setId(resultSet.getInt(1));
-				result.setStudentPRN(resultSet.getInt(2));
-				result.setTestId(resultSet.getInt(3));
+				result.setId(resultSet.getLong(1));
+				result.setStudentPRN(prn);
+				result.setTestId(resultSet.getLong(3));
 				result.setMarks(resultSet.getDouble(4));
 				result.setGrade(resultSet.getString(5));
 				result.setDate(resultSet.getDate(6));
@@ -104,7 +104,7 @@ public class ResultDaoImpl implements ResultDao {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, result.getStudentPRN());
-			statement.setInt(2, result.getTestId());
+			statement.setLong(2, result.getTestId());
 			statement.setDouble(3, result.getMarks());
 			statement.setString(4, result.getGrade());
 			statement.setDate(5, (Date) result.getDate());
@@ -134,13 +134,13 @@ public class ResultDaoImpl implements ResultDao {
 	}
 
 	@Override
-	public boolean deleteAllResultsForTest(int testId) {
+	public boolean deleteAllResultsForTest(long testId) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM RESULT WHERE TID = ?";
 		boolean status = false;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, testId);
+			statement.setLong(1, testId);
 			status = (statement.executeUpdate() > 0);
 		} catch (SQLException e) {
 			// TODO: handle exception

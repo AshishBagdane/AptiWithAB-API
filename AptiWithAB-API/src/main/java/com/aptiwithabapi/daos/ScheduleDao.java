@@ -6,10 +6,10 @@ import com.aptiwithabapi.models.Schedule;
 
 public interface ScheduleDao {
 
-	List<Schedule>	getAllSchedulesFor(int testId);
-	Schedule		getScheduleFor(int testId, int scheduleId);
+	List<Schedule>	getAllSchedulesFor(long testId);
+	Schedule		getScheduleFor(long testId, long scheduleId);
 	Schedule		create(Schedule schedule);
-	Schedule		update(int scheduleId, Schedule schedule);
-	boolean			deleteAllSchedulesFor(int testId);
-	Schedule		deleteSchedule(int scheduleId);
+	Schedule		update(long scheduleId, Schedule schedule);
+	boolean			deleteAllSchedulesFor(long testId);
+	Schedule		deleteSchedule(long scheduleId);
 }

@@ -13,13 +13,13 @@ import com.aptiwithabapi.utility.DatabaseConnection;
 public class OptionsDaoImpl implements OptionsDao {
 
 	@Override
-	public List<Option> getAllOptionsFor(int qnumber) {
+	public List<Option> getAllOptionsFor(long qnumber) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM OPTIONS WHERE NO = ?";
 		List<Option> options = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, qnumber);
+			statement.setLong(1, qnumber);
 			ResultSet resultSet = statement.executeQuery();
 			options = new ArrayList<>();
 			while (resultSet.next()) {
@@ -38,13 +38,13 @@ public class OptionsDaoImpl implements OptionsDao {
 	}
 
 	@Override
-	public Option getOptionFor(int qnumber, int optnumber) {
+	public Option getOptionFor(long qnumber, int optnumber) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM OPTIONS WHERE NO = ? AND OPTNO = ?";
 		Option option = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, qnumber);
+			statement.setLong(1, qnumber);
 			statement.setInt(2, optnumber);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -75,7 +75,7 @@ public class OptionsDaoImpl implements OptionsDao {
 		Option createdOption = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, option.getQuestionNo());
+			statement.setLong(1, option.getQuestionNo());
 			statement.setInt(2, option.getOptionNo());
 			statement.setString(3, option.getOption());
 			if (statement.executeUpdate() > 0) {
@@ -89,14 +89,14 @@ public class OptionsDaoImpl implements OptionsDao {
 	}
 
 	@Override
-	public Option update(int qnumber, int optnumber, Option option) {
+	public Option update(long qnumber, int optnumber, Option option) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE OPTIONS SET OPTION = ? WHERE NO = ? AND OPTNO = ?";
 		Option updatedOption = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(2, option.getQuestionNo());
-			statement.setInt(3, option.getOptionNo());
+			statement.setLong(2, qnumber);
+			statement.setInt(3, optnumber);
 			statement.setString(1, option.getOption());
 			if (statement.executeUpdate() > 0) {
 				updatedOption = option;
@@ -109,13 +109,13 @@ public class OptionsDaoImpl implements OptionsDao {
 	}
 
 	@Override
-	public boolean delete(int qnumber) {
+	public boolean delete(long qnumber) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM OPTIONS WHERE NO = ?";
 		boolean status = false;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, qnumber);
+			statement.setLong(1, qnumber);
 			status = (statement.executeUpdate() > 0);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -125,14 +125,14 @@ public class OptionsDaoImpl implements OptionsDao {
 	}
 
 	@Override
-	public Option delete(int qnumber, int optnumber) {
+	public Option delete(long qnumber, int optnumber) {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM OPTIONS WHERE NO = ? AND OPTNO = ?";
 		Option deletedOption = getOptionFor(qnumber, optnumber);
 		if (deletedOption != null) {
 			try (Connection connection = DatabaseConnection.getConnection()) {
 				PreparedStatement statement = connection.prepareStatement(sql);
-				statement.setInt(1, qnumber);
+				statement.setLong(1, qnumber);
 				statement.setInt(2, optnumber);
 				if (statement.executeUpdate() <= 0) {
 					deletedOption = null;

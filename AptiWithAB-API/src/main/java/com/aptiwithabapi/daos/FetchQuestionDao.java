@@ -7,10 +7,10 @@ import com.aptiwithabapi.models.Question;
 
 public interface FetchQuestionDao {
 
-	List<Question>	getAllQuestionsFor(int testId);
-	Question		getQuestionFor(int testId, int qnumber);
+	List<Question>	getAllQuestionsFor(long testId);
+	Question		getQuestionFor(long testId, long qnumber);
 	FetchQuestion	create(FetchQuestion fetchQuestion);
-	FetchQuestion	update(int testId, int qnumber, FetchQuestion fetchQuestion);
-	boolean			deleteAllQuestionsFrom(int testId);
-	FetchQuestion	deleteQuestionFrom(int testId, int qnumber);
+	FetchQuestion	update(long testId, long qnumber, FetchQuestion fetchQuestion);
+	boolean			deleteAllQuestionsFrom(long testId);
+	FetchQuestion	deleteQuestionFrom(long testId, long qnumber);
 }
