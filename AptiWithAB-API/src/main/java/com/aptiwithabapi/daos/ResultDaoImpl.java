@@ -21,17 +21,19 @@ public class ResultDaoImpl implements ResultDao {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
-			results = new ArrayList<>();
-			while (resultSet.next()) {
-				Result result = new Result();
-				result.setId(resultSet.getLong(1));
-				result.setStudentPRN(resultSet.getInt(2));
-				result.setTestId(resultSet.getLong(3));
-				result.setMarks(resultSet.getDouble(4));
-				result.setGrade(resultSet.getString(5));
-				result.setDate(resultSet.getDate(6));
-				
-				results.add(result);
+			if (resultSet.isBeforeFirst()) {
+				results = new ArrayList<>();
+				while (resultSet.next()) {
+					Result result = new Result();
+					result.setId(resultSet.getLong(1));
+					result.setStudentPRN(resultSet.getInt(2));
+					result.setTestId(resultSet.getLong(3));
+					result.setMarks(resultSet.getDouble(4));
+					result.setGrade(resultSet.getString(5));
+					result.setDate(resultSet.getDate(6));
+					
+					results.add(result);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -49,17 +51,19 @@ public class ResultDaoImpl implements ResultDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setLong(1, testId);
 			ResultSet resultSet = statement.executeQuery();
-			results = new ArrayList<>();
-			while (resultSet.next()) {
-				Result result = new Result();
-				result.setId(resultSet.getLong(1));
-				result.setStudentPRN(resultSet.getInt(2));
-				result.setTestId(testId);
-				result.setMarks(resultSet.getDouble(4));
-				result.setGrade(resultSet.getString(5));
-				result.setDate(resultSet.getDate(6));
-				
-				results.add(result);
+			if (resultSet.isBeforeFirst()) {
+				results = new ArrayList<>();
+				while (resultSet.next()) {
+					Result result = new Result();
+					result.setId(resultSet.getLong(1));
+					result.setStudentPRN(resultSet.getInt(2));
+					result.setTestId(testId);
+					result.setMarks(resultSet.getDouble(4));
+					result.setGrade(resultSet.getString(5));
+					result.setDate(resultSet.getDate(6));
+					
+					results.add(result);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -77,17 +81,19 @@ public class ResultDaoImpl implements ResultDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, prn);
 			ResultSet resultSet = statement.executeQuery();
-			results = new ArrayList<>();
-			while (resultSet.next()) {
-				Result result = new Result();
-				result.setId(resultSet.getLong(1));
-				result.setStudentPRN(prn);
-				result.setTestId(resultSet.getLong(3));
-				result.setMarks(resultSet.getDouble(4));
-				result.setGrade(resultSet.getString(5));
-				result.setDate(resultSet.getDate(6));
-				
-				results.add(result);
+			if (resultSet.isBeforeFirst()) {
+				results = new ArrayList<>();
+				while (resultSet.next()) {
+					Result result = new Result();
+					result.setId(resultSet.getLong(1));
+					result.setStudentPRN(prn);
+					result.setTestId(resultSet.getLong(3));
+					result.setMarks(resultSet.getDouble(4));
+					result.setGrade(resultSet.getString(5));
+					result.setDate(resultSet.getDate(6));
+					
+					results.add(result);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception

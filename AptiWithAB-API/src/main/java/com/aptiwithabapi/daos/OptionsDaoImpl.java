@@ -21,14 +21,16 @@ public class OptionsDaoImpl implements OptionsDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setLong(1, qnumber);
 			ResultSet resultSet = statement.executeQuery();
-			options = new ArrayList<>();
-			while (resultSet.next()) {
-				Option option = new Option();
-				option.setQuestionNo(qnumber);
-				option.setOptionNo(resultSet.getByte(2));
-				option.setOption(resultSet.getString(3));
-				
-				options.add(option);
+			if (resultSet.isBeforeFirst()) {
+				options = new ArrayList<>();
+				while (resultSet.next()) {
+					Option option = new Option();
+					option.setQuestionNo(qnumber);
+					option.setOptionNo(resultSet.getByte(2));
+					option.setOption(resultSet.getString(3));
+					
+					options.add(option);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -93,17 +95,19 @@ public class OptionsDaoImpl implements OptionsDao {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE OPTIONS SET OPTION = ? WHERE NO = ? AND OPTNO = ?";
 		Option updatedOption = null;
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setLong(2, qnumber);
-			statement.setInt(3, optnumber);
-			statement.setString(1, option.getOption());
-			if (statement.executeUpdate() > 0) {
-				updatedOption = option;
+		if (getOptionFor(qnumber, optnumber) != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setLong(2, qnumber);
+				statement.setInt(3, optnumber);
+				statement.setString(1, option.getOption());
+				if (statement.executeUpdate() > 0) {
+					updatedOption = option;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return updatedOption;
 	}

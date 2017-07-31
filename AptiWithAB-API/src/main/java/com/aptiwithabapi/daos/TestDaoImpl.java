@@ -20,16 +20,18 @@ public class TestDaoImpl implements TestDao {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
-			tests = new ArrayList<>();
-			while (resultSet.next()) {
-				Test test = new Test();
-				test.setId(resultSet.getLong(1));
-				test.setName(resultSet.getString(2));
-				test.setCreatedBy(resultSet.getString(3));
-				test.setDuration(resultSet.getInt(4));
-				test.setNoOfQuestions(resultSet.getInt(5));
-				
-				tests.add(test);
+			if (resultSet.isBeforeFirst()) {
+				tests = new ArrayList<>();
+				while (resultSet.next()) {
+					Test test = new Test();
+					test.setId(resultSet.getLong(1));
+					test.setName(resultSet.getString(2));
+					test.setCreatedBy(resultSet.getString(3));
+					test.setDuration(resultSet.getInt(4));
+					test.setNoOfQuestions(resultSet.getInt(5));
+					
+					tests.add(test);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -108,15 +110,17 @@ public class TestDaoImpl implements TestDao {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM TEST WHERE ID = ?";
 		Test test = getTestBy(id);
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setLong(1, id);
-			if (statement.executeUpdate() <= 0) {
-				test = null;
+		if (test != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setLong(1, id);
+				if (statement.executeUpdate() <= 0) {
+					test = null;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return test;
 	}

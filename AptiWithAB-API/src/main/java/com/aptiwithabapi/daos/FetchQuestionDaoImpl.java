@@ -22,17 +22,19 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setLong(1, testId);
 			ResultSet resultSet = statement.executeQuery();
-			questions = new ArrayList<>();
-			while (resultSet.next()) {
-				Question question = new Question();
-				question.setNo(resultSet.getInt(1));
-				question.setType(resultSet.getString(2));
-				question.setStatement(resultSet.getString(3));
-				question.setAnswer(resultSet.getString(4));
-				question.setMarks(resultSet.getInt(5));
-				question.setOptions(new OptionsDaoImpl().getAllOptionsFor(question.getNo()));
-				
-				questions.add(question);
+			if (resultSet.isBeforeFirst()) {
+				questions = new ArrayList<>();
+				while (resultSet.next()) {
+					Question question = new Question();
+					question.setNo(resultSet.getInt(1));
+					question.setType(resultSet.getString(2));
+					question.setStatement(resultSet.getString(3));
+					question.setAnswer(resultSet.getString(4));
+					question.setMarks(resultSet.getInt(5));
+					question.setOptions(new OptionsDaoImpl().getAllOptionsFor(question.getNo()));
+					
+					questions.add(question);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -92,17 +94,19 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE FETCH_QUESTION SET MARKS = ? WHERE TID = ? AND NO = ?";
 		FetchQuestion updatedFetchQuestion = null;
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setLong(1, testId);
-			statement.setLong(2, qnumber);
-			statement.setInt(3, fetchQuestion.getMarks());
-			if (statement.executeUpdate() > 0) {
-				updatedFetchQuestion = fetchQuestion;
+		if (getFetchQuestionFrom(testId, qnumber) != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setLong(1, testId);
+				statement.setLong(2, qnumber);
+				statement.setInt(3, fetchQuestion.getMarks());
+				if (statement.executeUpdate() > 0) {
+					updatedFetchQuestion = fetchQuestion;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return updatedFetchQuestion;
 	}
@@ -128,16 +132,18 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 		// TODO Auto-generated method stub
 		String sql = "DELETE FROM FETCH_QUESTION WHERE TID = ? AND NO = ?";
 		FetchQuestion deletedFetchQuestion = getFetchQuestionFrom(testId, qnumber);
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setLong(1, testId);
-			statement.setLong(2, qnumber);
-			if (statement.executeUpdate() <= 0) {
-				deletedFetchQuestion = null;
+		if (deletedFetchQuestion != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setLong(1, testId);
+				statement.setLong(2, qnumber);
+				if (statement.executeUpdate() <= 0) {
+					deletedFetchQuestion = null;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return deletedFetchQuestion;
 	}

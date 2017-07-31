@@ -22,15 +22,17 @@ public class ScheduleDaoImpl implements ScheduleDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setLong(1, testId);
 			ResultSet resultSet = statement.executeQuery();
-			schedules = new ArrayList<>();
-			while (resultSet.next()) {
-				Schedule schedule = new Schedule();
-				schedule.setId(resultSet.getLong(1));
-				schedule.setTestId(testId);
-				schedule.setDate(resultSet.getDate(3));
-				schedule.setConducted(resultSet.getString(4).charAt(0) == '1');
-				
-				schedules.add(schedule);
+			if (resultSet.isBeforeFirst()) {
+				schedules = new ArrayList<>();
+				while (resultSet.next()) {
+					Schedule schedule = new Schedule();
+					schedule.setId(resultSet.getLong(1));
+					schedule.setTestId(testId);
+					schedule.setDate(resultSet.getDate(3));
+					schedule.setConducted(resultSet.getString(4).charAt(0) == '1');
+					
+					schedules.add(schedule);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -49,7 +51,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 			statement.setLong(1, testId);
 			statement.setLong(2, scheduleId);
 			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				schedule = new Schedule();
 				schedule.setId(scheduleId);
 				schedule.setTestId(testId);
@@ -87,18 +89,20 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE SCHEDULE SET TID = ?, DATE = ?, ISCONDUCTED = ? WHERE ID = ?";
 		Schedule updatedSchedule = null;
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setLong(1, schedule.getTestId());
-			statement.setDate(2, (Date) schedule.getDate());
-			statement.setString(3, (schedule.getIsConducted()) ? String.valueOf('1') : String.valueOf('0'));
-			statement.setLong(4, scheduleId);
-			if (statement.executeUpdate() > 0) {
-				updatedSchedule = schedule;
+		if (getScheduleFor(scheduleId) != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setLong(1, schedule.getTestId());
+				statement.setDate(2, (Date) schedule.getDate());
+				statement.setString(3, (schedule.getIsConducted()) ? String.valueOf('1') : String.valueOf('0'));
+				statement.setLong(4, scheduleId);
+				if (statement.executeUpdate() > 0) {
+					updatedSchedule = schedule;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return updatedSchedule;
 	}

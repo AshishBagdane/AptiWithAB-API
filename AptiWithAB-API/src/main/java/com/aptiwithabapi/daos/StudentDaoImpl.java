@@ -20,17 +20,19 @@ public class StudentDaoImpl implements StudentDao {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
-			students = new ArrayList<>();
-			while (resultSet.next()) {
-				Student student = new Student();
-				student.setPRN(resultSet.getInt(1));
-				student.setName(resultSet.getString(2));
-				student.setBranch(resultSet.getString(3));
-				student.setEmail(resultSet.getString(4));
-				student.setContactNo(resultSet.getLong(5));
-				student.setPassword(resultSet.getString(6));
-				
-				students.add(student);
+			if (resultSet.isBeforeFirst()) {
+				students = new ArrayList<>();
+				while (resultSet.next()) {
+					Student student = new Student();
+					student.setPRN(resultSet.getInt(1));
+					student.setName(resultSet.getString(2));
+					student.setBranch(resultSet.getString(3));
+					student.setEmail(resultSet.getString(4));
+					student.setContactNo(resultSet.getLong(5));
+					student.setPassword(resultSet.getString(6));
+					
+					students.add(student);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception

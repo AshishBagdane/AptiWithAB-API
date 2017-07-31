@@ -21,19 +21,21 @@ public class QuestionDaoImpl implements QuestionDao {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
-			questions = new ArrayList<>();
-			while (resultSet.next()) {
-				Question question = new Question();
-				question.setNo(resultSet.getLong(1));
-				question.setType(resultSet.getString(2));
-				question.setStatement(resultSet.getString(3));
-				question.setAnswer(resultSet.getString(4));
-				question.setImageURL(resultSet.getString(5));
-				List<Option> options = new OptionsDaoImpl().getAllOptionsFor(question.getNo());
-				if (options != null) {
-					question.setOptions(options);
+			if (resultSet.isBeforeFirst()) {
+				questions = new ArrayList<>();
+				while (resultSet.next()) {
+					Question question = new Question();
+					question.setNo(resultSet.getLong(1));
+					question.setType(resultSet.getString(2));
+					question.setStatement(resultSet.getString(3));
+					question.setAnswer(resultSet.getString(4));
+					question.setImageURL(resultSet.getString(5));
+					List<Option> options = new OptionsDaoImpl().getAllOptionsFor(question.getNo());
+					if (options != null) {
+						question.setOptions(options);
+					}
+					questions.add(question);
 				}
-				questions.add(question);
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -96,19 +98,21 @@ public class QuestionDaoImpl implements QuestionDao {
 		// TODO Auto-generated method stub
 		String sql = "UPADET QUESTION SET TYPE = ?, STATEMENT = ?, ANSWER = ?, IMAGEURL = ? WHERE NO = ?";
 		Question updatedQuestion = null;
-		try (Connection connection = DatabaseConnection.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, question.getType());
-			statement.setString(2, question.getStatement());
-			statement.setString(3, question.getAnswer());
-			statement.setString(4, question.getImageURL());
-			statement.setLong(5, qnumber);
-			if (statement.executeUpdate() > 0) {
-				updatedQuestion = question;
+		if (getQuestionFor(qnumber) != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setString(1, question.getType());
+				statement.setString(2, question.getStatement());
+				statement.setString(3, question.getAnswer());
+				statement.setString(4, question.getImageURL());
+				statement.setLong(5, qnumber);
+				if (statement.executeUpdate() > 0) {
+					updatedQuestion = question;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return updatedQuestion;
 	}
