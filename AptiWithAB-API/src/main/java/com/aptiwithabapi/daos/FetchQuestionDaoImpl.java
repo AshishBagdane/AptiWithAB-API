@@ -72,7 +72,7 @@ public class FetchQuestionDaoImpl implements FetchQuestionDao {
 	@Override
 	public FetchQuestion create(FetchQuestion fetchQuestion) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO FETCH_QUESTION VALUES (fetchquestion_seq.NEXT_VAL, ?, ?, ?);";
+		String sql = "INSERT INTO FETCH_QUESTION VALUES (fetchquestion_seq.NEXTVAL, ?, ?, ?);";
 		FetchQuestion createdFetchQuestion = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);

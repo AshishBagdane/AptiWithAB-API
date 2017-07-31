@@ -105,7 +105,7 @@ public class ResultDaoImpl implements ResultDao {
 	@Override
 	public Result create(Result result) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO RESULT VALUES (result_seq.NEXT_VAL, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO RESULT VALUES (result_seq.NEXTVAL, ?, ?, ?, ?, ?)";
 		Result createdResult = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);

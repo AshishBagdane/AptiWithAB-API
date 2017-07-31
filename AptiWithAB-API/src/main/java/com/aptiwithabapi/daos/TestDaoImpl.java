@@ -71,9 +71,9 @@ public class TestDaoImpl implements TestDao {
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, test.getName());
-			statement.setInt(2, test.getDuration());
-			statement.setInt(3, test.getNoOfQuestions());
-			statement.setString(4, test.getCreatedBy());
+			statement.setString(2, test.getCreatedBy());
+			statement.setInt(3, test.getDuration());
+			statement.setInt(4, test.getNoOfQuestions());
 			if (statement.executeUpdate() <= 0) {
 				test = null;
 			}

@@ -68,7 +68,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	@Override
 	public Schedule create(Schedule schedule) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO SCHEDULE VALUES (schedule.NEXT_VAL, ?, ?, '0')";
+		String sql = "INSERT INTO SCHEDULE VALUES (schedule_seq.NEXTVAL, ?, ?, '0')";
 		Schedule createdSchedule = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);

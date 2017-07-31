@@ -75,7 +75,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public Question create(Question question) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO QUESTION VALUES (question_seq.NEXT_VAL, ?, ?, ?, ?)";
+		String sql = "INSERT INTO QUESTION VALUES (question_seq.NEXTVAL, ?, ?, ?, ?)";
 		Question createdQuestion = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
