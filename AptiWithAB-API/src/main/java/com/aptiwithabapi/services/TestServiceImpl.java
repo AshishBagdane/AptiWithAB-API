@@ -21,13 +21,13 @@ public class TestServiceImpl implements TestService {
 		// TODO Auto-generated method stub
 		List<Test> tests = dao.getAllTets();
 		if (tests == null) {
-			
+			throw new DataNotFoundException("There are no records.");
 		}
 		return tests;
 	}
 
 	@Override
-	public Test getTestBy(int id) {
+	public Test getTestBy(long id) {
 		// TODO Auto-generated method stub
 		Test test = dao.getTestBy(id);
 		if (test == null) {
@@ -47,17 +47,17 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public Test update(int id, Test test) {
+	public Test update(long id, Test test) {
 		// TODO Auto-generated method stub
 		test = dao.update(id, test);
 		if (test == null) {
-			
+			throw new DataNotFoundException("Test with id " + id + " does not exists.");
 		}
 		return test;
 	}
 
 	@Override
-	public Test delete(int id) {
+	public Test delete(long id) {
 		// TODO Auto-generated method stub
 		Test test = dao.delete(id);
 		if (test == null) {
@@ -71,7 +71,7 @@ public class TestServiceImpl implements TestService {
 		// TODO Auto-generated method stub
 		boolean status = dao.deleteAllTests();
 		if (!status) {
-			
+			throw new DataNotFoundException("There are no records to delete.");
 		}
 		return status;
 	}

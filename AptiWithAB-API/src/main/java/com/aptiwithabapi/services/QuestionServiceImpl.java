@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.aptiwithabapi.daos.QuestionDao;
 import com.aptiwithabapi.daos.QuestionDaoImpl;
+import com.aptiwithabapi.exceptions.DataNotFoundException;
 import com.aptiwithabapi.models.Question;
 
 public class QuestionServiceImpl implements QuestionService {
@@ -20,17 +21,17 @@ public class QuestionServiceImpl implements QuestionService {
 		// TODO Auto-generated method stub
 		List<Question> questions = dao.getAllQuestions();
 		if (questions == null) {
-			
+			throw new DataNotFoundException("There are no record(s).");
 		}
 		return questions;
 	}
 
 	@Override
-	public Question getQuestionFor(int qnumber) {
+	public Question getQuestionFor(long qnumber) {
 		// TODO Auto-generated method stub
 		Question question = dao.getQuestionFor(qnumber);
 		if (question == null) {
-			
+			throw new DataNotFoundException("There is no record associated with Question " + qnumber);
 		}
 		return question;
 	}
@@ -46,7 +47,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public Question update(int qnumber, Question question) {
+	public Question update(long qnumber, Question question) {
 		// TODO Auto-generated method stub
 		question = dao.update(qnumber, question);
 		if (question == null) {
@@ -56,11 +57,11 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public Question delete(int qnumber) {
+	public Question delete(long qnumber) {
 		// TODO Auto-generated method stub
 		Question question = delete(qnumber);
 		if (question == null) {
-			
+			throw new DataNotFoundException("There is no record associated with Question " + qnumber + " to delete.");
 		}
 		return question;
 	}
@@ -70,7 +71,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// TODO Auto-generated method stub
 		boolean status = dao.delete();
 		if (!status) {
-			
+			throw new DataNotFoundException("There are no record(s) to delete.");
 		}
 		return status;
 	}

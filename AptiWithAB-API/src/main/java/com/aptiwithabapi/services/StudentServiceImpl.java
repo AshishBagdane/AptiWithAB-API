@@ -26,8 +26,8 @@ public class StudentServiceImpl implements StudentService {
 	public Student getStudentBy(int prn) {
 		// TODO Auto-generated method stub
 		Student student = dao.getStudentBy(prn);
-		if (student != null) {
-			throw new DataNotFoundException("Student with PRN " + prn + " does not exists.");
+		if (student == null) {
+			throw new DataNotFoundException("Student with PRN " + prn + " does not exist.");
 		}
 		return student;
 	}
@@ -67,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
 		// TODO Auto-generated method stub
 		boolean status = dao.deleteAllStudents();
 		if (!status) {
-			
+			throw new DataNotFoundException("There are no records to delete.");
 		}
 		return status;
 	}

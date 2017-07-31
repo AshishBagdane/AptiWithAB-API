@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.aptiwithabapi.daos.ScheduleDao;
 import com.aptiwithabapi.daos.ScheduleDaoImpl;
+import com.aptiwithabapi.exceptions.DataNotFoundException;
 import com.aptiwithabapi.models.Schedule;
 
 public class ScheduleServiceImpl implements ScheduleService {
@@ -16,21 +17,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	@Override
-	public List<Schedule> getAllSchedulesFor(int testId) {
+	public List<Schedule> getAllSchedulesFor(long testId) {
 		// TODO Auto-generated method stub
 		List<Schedule> schedules = dao.getAllSchedulesFor(testId);
 		if (schedules == null) {
-			
+			throw new DataNotFoundException("There are no records associated with Test " + testId);
 		}
 		return schedules;
 	}
 
 	@Override
-	public Schedule getScheduleFor(int testId, int scheduleId) {
+	public Schedule getScheduleFor(long testId, long scheduleId) {
 		// TODO Auto-generated method stub
 		Schedule schedule = dao.getScheduleFor(testId, scheduleId);
 		if (schedule == null) {
-			
+			throw new DataNotFoundException("No such schedule exists.");
 		}
 		return schedule;
 	}
@@ -46,7 +47,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public Schedule update(int scheduleId, Schedule schedule) {
+	public Schedule update(long scheduleId, Schedule schedule) {
 		// TODO Auto-generated method stub
 		schedule = dao.update(scheduleId, schedule);
 		if (schedule == null) {
@@ -56,21 +57,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public boolean deleteAllSchedulesFor(int testId) {
+	public boolean deleteAllSchedulesFor(long testId) {
 		// TODO Auto-generated method stub
 		boolean status = dao.deleteAllSchedulesFor(testId);
 		if (!status) {
-			
+			throw new DataNotFoundException("There are no records associated with Test " + testId + ".");
 		}
 		return status;
 	}
 
 	@Override
-	public Schedule deleteSchedule(int scheduleId) {
+	public Schedule deleteSchedule(long scheduleId) {
 		// TODO Auto-generated method stub
 		Schedule schedule = dao.deleteSchedule(scheduleId);
 		if (schedule == null) {
-			
+			throw new DataNotFoundException("No such schedule exists.");
 		}
 		return schedule;
 	}
