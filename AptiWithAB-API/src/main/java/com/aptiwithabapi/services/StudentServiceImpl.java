@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.StudentDao;
 import com.aptiwithabapi.daos.StudentDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.Student;
 
 public class StudentServiceImpl implements StudentService {
@@ -37,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
 		// TODO Auto-generated method stub
 		student = dao.create(student);
 		if (student == null) {
-			
+			throw new DataUpdateFailedException("Resource creation failed.");
 		}
 		return student;
 	}
@@ -47,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
 		// TODO Auto-generated method stub
 		student = dao.update(prn, student);
 		if (student == null) {
-			
+			throw new DataNotFoundException("Student with PRN " + prn + " does not exist.");
 		}
 		return student;
 	}

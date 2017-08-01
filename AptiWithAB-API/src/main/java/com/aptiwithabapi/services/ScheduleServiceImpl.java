@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.ScheduleDao;
 import com.aptiwithabapi.daos.ScheduleDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.Schedule;
 
 public class ScheduleServiceImpl implements ScheduleService {
@@ -41,7 +42,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// TODO Auto-generated method stub
 		schedule = dao.create(schedule);
 		if (schedule == null) {
-			
+			throw new DataUpdateFailedException("Resource creation failed.");
 		}
 		return schedule;
 	}
@@ -51,7 +52,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// TODO Auto-generated method stub
 		schedule = dao.update(scheduleId, schedule);
 		if (schedule == null) {
-			
+			throw new DataNotFoundException("Schedule with Id " + scheduleId + " does not exist.");
 		}
 		return schedule;
 	}

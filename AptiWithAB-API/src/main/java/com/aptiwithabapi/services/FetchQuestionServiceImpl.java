@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.FetchQuestionDao;
 import com.aptiwithabapi.daos.FetchQuestionDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.FetchQuestion;
 import com.aptiwithabapi.models.Question;
 
@@ -42,7 +43,7 @@ public class FetchQuestionServiceImpl implements FetchQuestionService {
 		// TODO Auto-generated method stub
 		fetchQuestion = dao.create(fetchQuestion);
 		if (fetchQuestion == null) {
-			
+			throw new DataUpdateFailedException("Resource creation failed.");
 		}
 		return fetchQuestion;
 	}
@@ -52,7 +53,7 @@ public class FetchQuestionServiceImpl implements FetchQuestionService {
 		// TODO Auto-generated method stub
 		fetchQuestion = dao.update(testId, qnumber, fetchQuestion);
 		if (fetchQuestion == null) {
-			
+			throw new DataNotFoundException("Resource does not exist.");
 		}
 		return fetchQuestion;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.ResultDao;
 import com.aptiwithabapi.daos.ResultDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.Result;
 
 public class ResultServiceImpl implements ResultService {
@@ -51,7 +52,7 @@ public class ResultServiceImpl implements ResultService {
 		// TODO Auto-generated method stub
 		result = dao.create(result);
 		if (result == null) {
-			
+			throw new DataUpdateFailedException("Resource creation failed.");
 		}
 		return result;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.TestDao;
 import com.aptiwithabapi.daos.TestDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.Test;
 
 public class TestServiceImpl implements TestService {
@@ -41,7 +42,7 @@ public class TestServiceImpl implements TestService {
 		// TODO Auto-generated method stub
 		test = dao.create(test);
 		if (test == null) {
-			
+			throw new DataUpdateFailedException("Resource Creation Failed");
 		}
 		return test;
 	}

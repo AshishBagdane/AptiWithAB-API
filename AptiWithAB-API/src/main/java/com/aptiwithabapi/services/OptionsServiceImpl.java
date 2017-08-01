@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.OptionsDao;
 import com.aptiwithabapi.daos.OptionsDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.Option;
 
 public class OptionsServiceImpl implements OptionsService {
@@ -41,7 +42,7 @@ public class OptionsServiceImpl implements OptionsService {
 		// TODO Auto-generated method stub
 		options = dao.create(options);
 		if (options == null) {
-			
+			throw new DataUpdateFailedException("Resource creation failed.");
 		}
 		return options;
 	}
@@ -51,7 +52,7 @@ public class OptionsServiceImpl implements OptionsService {
 		// TODO Auto-generated method stub
 		option = dao.update(qnumber, optnumber, option);
 		if (option == null) {
-			
+			throw new DataNotFoundException("Option does not exist.");
 		}
 		return option;
 	}

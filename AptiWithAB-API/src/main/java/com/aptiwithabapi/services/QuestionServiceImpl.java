@@ -5,6 +5,7 @@ import java.util.List;
 import com.aptiwithabapi.daos.QuestionDao;
 import com.aptiwithabapi.daos.QuestionDaoImpl;
 import com.aptiwithabapi.exceptions.DataNotFoundException;
+import com.aptiwithabapi.exceptions.DataUpdateFailedException;
 import com.aptiwithabapi.models.Question;
 
 public class QuestionServiceImpl implements QuestionService {
@@ -41,7 +42,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// TODO Auto-generated method stub
 		question = dao.create(question);
 		if (question == null) {
-			
+			throw new DataUpdateFailedException("Resource creation failed.");
 		}
 		return question;
 	}
@@ -51,7 +52,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// TODO Auto-generated method stub
 		question = dao.update(qnumber, question);
 		if (question == null) {
-			
+			throw new DataNotFoundException("Question " + qnumber + " does not exist.");
 		}
 		return question;
 	}
