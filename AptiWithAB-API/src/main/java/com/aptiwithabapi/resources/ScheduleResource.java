@@ -11,10 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aptiwithabapi.models.Schedule;
 import com.aptiwithabapi.services.ScheduleService;
 import com.aptiwithabapi.services.ScheduleServiceImpl;
+import com.aptiwithabapi.utility.GetResponse;
 
 @Consumes(value = {MediaType.APPLICATION_JSON})
 @Produces(value = {MediaType.APPLICATION_JSON})
@@ -28,35 +30,47 @@ public class ScheduleResource {
 	}
 	
 	@GET
-	public List<Schedule> getAllSchedulesFor(@PathParam("testId") long testId) {
-		return service.getAllSchedulesFor(testId);
+	public Response getAllSchedulesFor(@PathParam("testId") long testId) {
+		List<Schedule> schedules = service.getAllSchedulesFor(testId);
+		Response response = GetResponse.forFound(schedules);
+		return response;
 	}
 	
 	@GET
 	@Path("/{scheduleId}")
-	public Schedule getScheduleFor(@PathParam("testId") long testId, @PathParam("scheduleId") long scheduleId) {
-		return service.getScheduleFor(testId, scheduleId);
+	public Response getScheduleFor(@PathParam("testId") long testId, @PathParam("scheduleId") long scheduleId) {
+		Schedule schedule = service.getScheduleFor(testId, scheduleId);
+		Response response = GetResponse.forFound(schedule);
+		return response;
 	}
 	
 	@POST
-	public Schedule create(Schedule schedule) {
-		return service.create(schedule);
+	public Response create(Schedule schedule) {
+		schedule = service.create(schedule);
+		Response response = GetResponse.forCreated(schedule);
+		return response;
 	}
 	
 	@PUT
 	@Path("/{scheduleId}")
-	public Schedule update(@PathParam("scheduleId") long scheduleId, Schedule schedule) {
-		return service.update(scheduleId, schedule);
+	public Response update(@PathParam("scheduleId") long scheduleId, Schedule schedule) {
+		schedule = service.update(scheduleId, schedule);
+		Response response = GetResponse.forOk(schedule);
+		return response;
 	}
 	
 	@DELETE
-	public boolean deleteAllSchedulesFor(@PathParam("testId") long testId) {
-		return service.deleteAllSchedulesFor(testId);
+	public Response deleteAllSchedulesFor(@PathParam("testId") long testId) {
+		boolean status = service.deleteAllSchedulesFor(testId);
+		Response response = GetResponse.forOk(status);
+		return response;
 	}
 	
 	@DELETE
 	@Path("/{scheduleId}")
-	public Schedule deleteSchedule(@PathParam("scheduleId") long scheduleId) {
-		return service.deleteSchedule(scheduleId);
+	public Response deleteSchedule(@PathParam("scheduleId") long scheduleId) {
+		Schedule schedule = service.deleteSchedule(scheduleId);
+		Response response = GetResponse.forOk(schedule);
+		return response;
 	}
 }

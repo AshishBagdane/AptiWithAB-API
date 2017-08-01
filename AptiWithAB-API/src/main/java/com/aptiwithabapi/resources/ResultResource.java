@@ -8,10 +8,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aptiwithabapi.models.Result;
 import com.aptiwithabapi.services.ResultService;
 import com.aptiwithabapi.services.ResultServiceImpl;
+import com.aptiwithabapi.utility.GetResponse;
 
 @Consumes(value = {MediaType.APPLICATION_JSON})
 @Produces(value = {MediaType.APPLICATION_JSON})
@@ -25,17 +27,23 @@ public class ResultResource {
 	}
 	
 	@GET
-	public List<Result> getAllResults() {
-		return service.getAllResults();
+	public Response getAllResults() {
+		List<Result> results = service.getAllResults();
+		Response response = GetResponse.forFound(results);
+		return response;
 	}
 	
 	@POST
-	public Result create(Result result) {
-		return service.create(result);
+	public Response create(Result result) {
+		result = service.create(result);
+		Response response = GetResponse.forCreated(result);
+		return response;
 	}
 	
 	@DELETE
-	public boolean deleteAllResults() {
-		return service.deleteAllResults();
+	public Response deleteAllResults() {
+		boolean status = service.deleteAllResults();
+		Response response = GetResponse.forOk(status);
+		return response;
 	}
 }

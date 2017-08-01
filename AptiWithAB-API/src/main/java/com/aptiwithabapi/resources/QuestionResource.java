@@ -11,10 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aptiwithabapi.models.Question;
 import com.aptiwithabapi.services.QuestionService;
 import com.aptiwithabapi.services.QuestionServiceImpl;
+import com.aptiwithabapi.utility.GetResponse;
 
 @Path("/questions")
 @Consumes(value = {MediaType.APPLICATION_JSON})
@@ -29,36 +31,48 @@ public class QuestionResource {
 	}
 	
 	@GET
-	public List<Question> getAllQuestions() {
-		return service.getAllQuestions();
+	public Response getAllQuestions() {
+		List<Question> questions = service.getAllQuestions();
+		Response response = GetResponse.forFound(questions);
+		return response;
 	}
 	
 	@GET
 	@Path("/{qnumber}")
-	public Question getQuestionFor(@PathParam("qnumber") long qnumber) {
-		return service.getQuestionFor(qnumber);
+	public Response getQuestionFor(@PathParam("qnumber") long qnumber) {
+		Question question = service.getQuestionFor(qnumber);
+		Response response = GetResponse.forFound(question);
+		return response;
 	}
 	
 	@POST
-	public Question create(Question question) {
-		return service.create(question);
+	public Response create(Question question) {
+		question = service.create(question);
+		Response response = GetResponse.forCreated(question);
+		return response;
 	}
 	
 	@PUT
 	@Path("/{qnumber}")
-	public Question update(@PathParam("qnumber") long qnumber, Question question) {
-		return service.update(qnumber, question);
+	public Response update(@PathParam("qnumber") long qnumber, Question question) {
+		question = service.update(qnumber, question);
+		Response response = GetResponse.forOk(question);
+		return response;
 	}
 	
 	@DELETE
 	@Path("/{qnumber}")
-	public Question delete(@PathParam("qnumber") long qnumber) {
-		return service.delete(qnumber);
+	public Response delete(@PathParam("qnumber") long qnumber) {
+		Question question = service.delete(qnumber);
+		Response response = GetResponse.forOk(question);
+		return response;
 	}
 	
 	@DELETE
-	public boolean delete() {
-		return service.delete();
+	public Response delete() {
+		boolean status = service.delete();
+		Response response = GetResponse.forOk(status);
+		return response;
 	}
 	
 	@Path("/options")

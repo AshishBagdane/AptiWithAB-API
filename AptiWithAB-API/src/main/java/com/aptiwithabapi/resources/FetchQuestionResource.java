@@ -11,11 +11,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aptiwithabapi.models.FetchQuestion;
 import com.aptiwithabapi.models.Question;
 import com.aptiwithabapi.services.FetchQuestionService;
 import com.aptiwithabapi.services.FetchQuestionServiceImpl;
+import com.aptiwithabapi.utility.GetResponse;
 
 @Consumes(value = {MediaType.APPLICATION_JSON})
 @Produces(value = {MediaType.APPLICATION_JSON})
@@ -29,35 +31,47 @@ public class FetchQuestionResource {
 	}
 	
 	@GET
-	public List<Question> getAllQuestionsFor(@PathParam("testId") long testId) {
-		return service.getAllQuestionsFor(testId);
+	public Response getAllQuestionsFor(@PathParam("testId") long testId) {
+		List<Question> questions = service.getAllQuestionsFor(testId);
+		Response response = GetResponse.forFound(questions);
+		return response;
 	}
 	
 	@GET
 	@Path("/{qnumber}")
-	public Question getQuestionFor(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber) {
-		return service.getQuestionFor(testId, qnumber);
+	public Response getQuestionFor(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber) {
+		Question question = service.getQuestionFor(testId, qnumber);
+		Response response = GetResponse.forFound(question);
+		return response;
 	}
 	
 	@POST
-	public FetchQuestion create(FetchQuestion fetchQuestion) {
-		return service.create(fetchQuestion);
+	public Response create(FetchQuestion fetchQuestion) {
+		fetchQuestion = service.create(fetchQuestion); 
+		Response response = GetResponse.forCreated(fetchQuestion);
+		return response;
 	}
 	
 	@PUT
 	@Path("/{qnumber}")
-	public FetchQuestion update(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber, FetchQuestion fetchQuestion) {
-		return service.update(testId, qnumber, fetchQuestion);
+	public Response update(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber, FetchQuestion fetchQuestion) {
+		fetchQuestion = service.update(testId, qnumber, fetchQuestion);
+		Response response = GetResponse.forOk(fetchQuestion);
+		return response;
 	}
 	
 	@DELETE
-	public boolean deleteAllQuestionsFrom(@PathParam("testId") long testId) {
-		return service.deleteAllQuestionsFrom(testId);
+	public Response deleteAllQuestionsFrom(@PathParam("testId") long testId) {
+		boolean status = service.deleteAllQuestionsFrom(testId);
+		Response response = GetResponse.forOk(status);
+		return response;
 	}
 	
 	@DELETE
 	@Path("/{qnumber}")
-	public FetchQuestion deleteQuestionFrom(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber) {
-		return service.deleteQuestionFrom(testId, qnumber);
+	public Response deleteQuestionFrom(@PathParam("testId") long testId, @PathParam("qnumber") long qnumber) {
+		FetchQuestion fetchQuestion = service.deleteQuestionFrom(testId, qnumber);
+		Response response = GetResponse.forCreated(fetchQuestion);
+		return response;
 	}
 }

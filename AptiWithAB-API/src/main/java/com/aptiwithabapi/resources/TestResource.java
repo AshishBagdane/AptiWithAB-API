@@ -11,10 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aptiwithabapi.models.Test;
 import com.aptiwithabapi.services.TestService;
 import com.aptiwithabapi.services.TestServiceImpl;
+import com.aptiwithabapi.utility.GetResponse;
 
 @Path("/tests")
 @Consumes(value = {MediaType.APPLICATION_JSON})
@@ -29,36 +31,48 @@ public class TestResource {
 	}
 
 	@GET
-	public List<Test> getAllTests() {
-		return service.getAllTets();
+	public Response getAllTests() {
+		List<Test> tests = service.getAllTets();
+		Response response = GetResponse.forFound(tests);
+		return response;
 	}
 	
 	@GET
 	@Path("/{testId}")
-	public Test getTestBy(@PathParam("testId") long testId) {
-		return service.getTestBy(testId);
+	public Response getTestBy(@PathParam("testId") long testId) {
+		Test test = service.getTestBy(testId);
+		Response response = GetResponse.forFound(test);
+		return response;
 	}
 	
 	@POST
-	public Test create(Test test) {
-		return service.create(test);
+	public Response create(Test test) {
+		test = service.create(test);
+		Response response = GetResponse.forCreated(test);
+		return response;
 	}
 	
 	@PUT
 	@Path("/{testId}")
-	public Test update(@PathParam("testId") long testId, Test test) {
-		return service.update(testId, test);
+	public Response update(@PathParam("testId") long testId, Test test) {
+		test = service.update(testId, test);
+		Response response = GetResponse.forOk(test);
+		return response;
 	}
 	
 	@DELETE
-	public boolean deleteAllTests() {
-		return service.deleteAllTests();
+	public Response deleteAllTests() {
+		boolean status = service.deleteAllTests();
+		Response response = GetResponse.forOk(status);
+		return response;
 	}
 	
 	@DELETE
 	@Path("/{testId}")
-	public Test delete(@PathParam("testId") long testId) {
-		return service.delete(testId);
+	public Response delete(@PathParam("testId") long testId) {
+		Test test = service.delete(testId);
+		Response response = GetResponse.forOk(test);
+		return response;
 	}
 	
 	@Path("/schedules")

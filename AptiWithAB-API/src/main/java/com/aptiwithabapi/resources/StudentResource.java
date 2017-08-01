@@ -11,10 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aptiwithabapi.models.Student;
 import com.aptiwithabapi.services.StudentService;
 import com.aptiwithabapi.services.StudentServiceImpl;
+import com.aptiwithabapi.utility.GetResponse;
 
 @Path("/students")
 @Consumes(value = {MediaType.APPLICATION_JSON})
@@ -29,35 +31,47 @@ public class StudentResource {
 	}
 	
 	@GET
-	public List<Student> getAllStudents() {
-		return service.getAllStudents();
+	public Response getAllStudents() {
+		List<Student> students = service.getAllStudents();
+		Response response = GetResponse.forFound(students);
+		return response;
 	}
 	
 	@GET
 	@Path("/{prn}")
-	public Student getStudentBy(@PathParam("prn") int prn) {
-		return service.getStudentBy(prn);
+	public Response getStudentBy(@PathParam("prn") int prn) {
+		Student student = service.getStudentBy(prn);
+		Response response = GetResponse.forFound(student);
+		return response;
 	}
 	
 	@POST
-	public Student create(Student student) {
-		return service.create(student);
+	public Response create(Student student) {
+		student = service.create(student);
+		Response response = GetResponse.forCreated(student);
+		return response;
 	}
 	
 	@PUT
 	@Path("/{prn}")
-	public Student update(@PathParam("prn") int prn, Student student) {
-		return service.update(prn, student);
+	public Response update(@PathParam("prn") int prn, Student student) {
+		student = service.update(prn, student);
+		Response response = GetResponse.forOk(student);
+		return response;
 	}
 	
 	@DELETE
 	@Path("/{prn}")
-	public Student delete(@PathParam("prn") int prn) {
-		return service.delete(prn);
+	public Response delete(@PathParam("prn") int prn) {
+		Student student = service.delete(prn);
+		Response response = GetResponse.forOk(student);
+		return response;
 	}
 	
 	@DELETE
-	public boolean deleteAllStudents() {
-		return service.deleteAllStudents();
+	public Response deleteAllStudents() {
+		boolean status = service.deleteAllStudents();
+		Response response = GetResponse.forOk(status);
+		return response;
 	}
 }
