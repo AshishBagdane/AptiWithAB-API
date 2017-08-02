@@ -16,6 +16,10 @@ public class Question implements Comparable<Question> {
 	private int marks;
 	private List<Option> options;
 	
+	public Question() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public long getNo() {
 		return no;
 	}

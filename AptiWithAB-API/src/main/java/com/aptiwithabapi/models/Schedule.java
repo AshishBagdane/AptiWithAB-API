@@ -12,6 +12,10 @@ public class Schedule implements Comparable<Schedule> {
 	private Date date;
 	private boolean isConducted;
 	
+	public Schedule() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public long getId() {
 		return id;
 	}

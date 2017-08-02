@@ -10,6 +10,10 @@ public class FetchQuestion {
 	private long questionNo;
 	private byte marks;
 	
+	public FetchQuestion() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public int getId() {
 		return id;
 	}

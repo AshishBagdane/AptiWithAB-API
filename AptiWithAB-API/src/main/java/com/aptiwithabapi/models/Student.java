@@ -12,6 +12,10 @@ public class Student implements Comparable<Student> {
 	private long contactNo;
 	private String password;
 	
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public int getPRN() {
 		return PRN;
 	}

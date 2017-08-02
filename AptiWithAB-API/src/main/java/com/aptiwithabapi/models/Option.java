@@ -9,6 +9,10 @@ public class Option implements Comparable<Option> {
 	private byte optionNo;
 	private String option;
 	
+	public Option() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public long getQuestionNo() {
 		return questionNo;
 	}

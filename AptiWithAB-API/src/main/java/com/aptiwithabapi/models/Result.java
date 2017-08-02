@@ -14,6 +14,10 @@ public class Result implements Comparable<Result> {
 	private String grade;
 	private Date date;
 	
+	public Result() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public long getId() {
 		return id;
 	}

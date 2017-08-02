@@ -11,6 +11,10 @@ public class Test implements Comparable<Test> {
 	private int duration;
 	private int noOfQuestions;
 	
+	public Test() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public long getId() {
 		return id;
 	}
