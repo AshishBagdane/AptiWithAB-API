@@ -33,7 +33,7 @@ public class StudentResource {
 	@GET
 	public Response getAllStudents() {
 		List<Student> students = service.getAllStudents();
-		Response response = GetResponse.forFound(students);
+		Response response = GetResponse.forFound(students.toArray(new Student[students.size()]));
 		return response;
 	}
 	

@@ -32,7 +32,7 @@ public class OptionResource {
 	@GET
 	public Response getAllOptionsFor(@PathParam("qnumber") long qnumber) {
 		List<Option> options = service.getAllOptionsFor(qnumber);
-		Response response = GetResponse.forFound(options);
+		Response response = GetResponse.forFound(options.toArray(new Option[options.size()]));
 		return response;
 	}
 	

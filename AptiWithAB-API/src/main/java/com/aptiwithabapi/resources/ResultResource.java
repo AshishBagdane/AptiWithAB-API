@@ -29,7 +29,7 @@ public class ResultResource {
 	@GET
 	public Response getAllResults() {
 		List<Result> results = service.getAllResults();
-		Response response = GetResponse.forFound(results);
+		Response response = GetResponse.forFound(results.toArray(new Result[results.size()]));
 		return response;
 	}
 	

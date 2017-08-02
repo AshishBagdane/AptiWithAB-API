@@ -33,7 +33,7 @@ public class QuestionResource {
 	@GET
 	public Response getAllQuestions() {
 		List<Question> questions = service.getAllQuestions();
-		Response response = GetResponse.forFound(questions);
+		Response response = GetResponse.forFound(questions.toArray(new Question[questions.size()]));
 		return response;
 	}
 	

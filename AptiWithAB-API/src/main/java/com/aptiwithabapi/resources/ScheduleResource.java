@@ -32,7 +32,7 @@ public class ScheduleResource {
 	@GET
 	public Response getAllSchedulesFor(@PathParam("testId") long testId) {
 		List<Schedule> schedules = service.getAllSchedulesFor(testId);
-		Response response = GetResponse.forFound(schedules);
+		Response response = GetResponse.forFound(schedules.toArray(new Schedule[schedules.size()]));
 		return response;
 	}
 	

@@ -33,7 +33,7 @@ public class FetchQuestionResource {
 	@GET
 	public Response getAllQuestionsFor(@PathParam("testId") long testId) {
 		List<Question> questions = service.getAllQuestionsFor(testId);
-		Response response = GetResponse.forFound(questions);
+		Response response = GetResponse.forFound(questions.toArray(new Question[questions.size()]));
 		return response;
 	}
 	
