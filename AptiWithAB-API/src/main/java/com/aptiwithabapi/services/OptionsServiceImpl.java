@@ -34,7 +34,7 @@ public class OptionsServiceImpl implements OptionsService {
 		if (option == null) {
 			throw new DataNotFoundException("There is no record for this option associated with question " + qnumber + ".");
 		}
-		return null;
+		return option;
 	}
 
 	@Override

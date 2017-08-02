@@ -35,7 +35,7 @@ public class FetchQuestionServiceImpl implements FetchQuestionService {
 		if (question == null) {
 			throw new DataNotFoundException("There is no record associated with this question from Test " + testId);
 		}
-		return null;
+		return question;
 	}
 
 	@Override
