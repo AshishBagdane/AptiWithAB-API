@@ -6,10 +6,12 @@ import com.aptiwithabapi.models.Result;
 
 public interface ResultService {
 
+	Result			getResultFor(long resultId);
 	List<Result>	getAllResults();
 	List<Result>	getAllResultsForTest(long testId);
 	List<Result>	getAllResultsForStudent(int prn);
 	Result			create(Result result);
+	Result			deleteResultFor(long resultId);
 	boolean			deleteAllResults();
 	boolean			deleteAllResultsForTest(long testId);
 	boolean			deleteAllResultsForStudent(int prn);

@@ -86,5 +86,25 @@ public class ResultServiceImpl implements ResultService {
 		}
 		return status;
 	}
+
+	@Override
+	public Result getResultFor(long resultId) {
+		// TODO Auto-generated method stub
+		Result result = dao.getResultFor(resultId);
+		if (result == null) {
+			throw new DataNotFoundException("No such record exists.");
+		}
+		return result;
+	}
+
+	@Override
+	public Result deleteResultFor(long resultId) {
+		// TODO Auto-generated method stub
+		Result result = dao.deleteResultFor(resultId);
+		if (result == null) {
+			throw new DataNotFoundException("No such record exists.");
+		}
+		return result;
+	}
 	
 }

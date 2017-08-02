@@ -169,4 +169,51 @@ public class ResultDaoImpl implements ResultDao {
 		return status;
 	}
 
+	@Override
+	public Result getResultFor(long resultId) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM RESULT WHERE ID = ?";
+		Result result = null;
+		try (Connection connection = DatabaseConnection.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setLong(1, resultId);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.isBeforeFirst()) {
+				if (resultSet.next()) {
+					result = new Result();
+					result.setId(resultSet.getLong(1));
+					result.setStudentPRN(resultSet.getInt(2));
+					result.setTestId(resultSet.getLong(3));
+					result.setMarks(resultSet.getDouble(4));
+					result.setGrade(resultSet.getString(5));
+					result.setDate(resultSet.getDate(6));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Result deleteResultFor(long resultId) {
+		// TODO Auto-generated method stub
+		String sql = "DELETE FROM RESULT WHERE ID = ?";
+		Result deletedResult = getResultFor(resultId);
+		if (deletedResult != null) {
+			try (Connection connection = DatabaseConnection.getConnection()) {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setLong(1, resultId);
+				if (statement.executeUpdate() <= 0) {
+					deletedResult = null;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return deletedResult;
+	}
+
 }
