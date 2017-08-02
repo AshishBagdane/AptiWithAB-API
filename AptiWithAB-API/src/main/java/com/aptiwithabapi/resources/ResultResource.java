@@ -3,6 +3,7 @@ package com.aptiwithabapi.resources;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,6 +29,14 @@ public class ResultResource {
 	}
 	
 	@GET
+	@Path("/{resultId}")
+	public Response getResultFor(long resultId) {
+		Result result = service.getResultFor(resultId);
+		Response response = GetResponse.forFound(result);
+		return response;
+	}
+	
+	@GET
 	public Response getAllResults() {
 		List<Result> results = service.getAllResults();
 		Response response = GetResponse.forFound(results.toArray(new Result[results.size()]));
@@ -41,9 +50,18 @@ public class ResultResource {
 		return response;
 	}
 	
+	@DELETE
 	public Response deleteAllResults() {
 		boolean status = service.deleteAllResults();
 		Response response = GetResponse.forOk(status);
+		return response;
+	}
+	
+	@DELETE
+	@Path("/{resultId}")
+	public Response deleteResultFor(long resultId) {
+		Result result = service.deleteResultFor(resultId);
+		Response response = GetResponse.forFound(result);
 		return response;
 	}
 }
