@@ -13,7 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.aptiwithabapi.models.Result;
 import com.aptiwithabapi.models.Test;
+import com.aptiwithabapi.services.ResultServiceImpl;
 import com.aptiwithabapi.services.TestService;
 import com.aptiwithabapi.services.TestServiceImpl;
 import com.aptiwithabapi.utility.GetResponse;
@@ -75,13 +77,21 @@ public class TestResource {
 		return response;
 	}
 	
-	@Path("/schedules")
+	@Path("/{testId}/schedules")
 	public ScheduleResource getScheduleResource() {
 		return new ScheduleResource();
 	}
 	
-	@Path("/fetch")
+	@Path("/{testId}/fetch")
 	public FetchQuestionResource getFetchQuestionResource() {
 		return new FetchQuestionResource();
+	}
+	
+	@GET
+	@Path("/{testId}/results")
+	public Response getAllResultsForStudent(@PathParam("testId") long testId) {
+		List<Result> results = new ResultServiceImpl().getAllResultsForTest(testId);
+		Response response = GetResponse.forFound(results.toArray(new Result[results.size()]));
+		return response;
 	}
 }

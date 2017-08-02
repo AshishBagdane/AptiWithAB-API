@@ -3,9 +3,9 @@ package com.aptiwithabapi.resources;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,6 +15,7 @@ import com.aptiwithabapi.services.ResultService;
 import com.aptiwithabapi.services.ResultServiceImpl;
 import com.aptiwithabapi.utility.GetResponse;
 
+@Path("/results")
 @Consumes(value = {MediaType.APPLICATION_JSON})
 @Produces(value = {MediaType.APPLICATION_JSON})
 public class ResultResource {
@@ -40,7 +41,6 @@ public class ResultResource {
 		return response;
 	}
 	
-	@DELETE
 	public Response deleteAllResults() {
 		boolean status = service.deleteAllResults();
 		Response response = GetResponse.forOk(status);

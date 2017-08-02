@@ -13,7 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.aptiwithabapi.models.Result;
 import com.aptiwithabapi.models.Student;
+import com.aptiwithabapi.services.ResultServiceImpl;
 import com.aptiwithabapi.services.StudentService;
 import com.aptiwithabapi.services.StudentServiceImpl;
 import com.aptiwithabapi.utility.GetResponse;
@@ -72,6 +74,14 @@ public class StudentResource {
 	public Response deleteAllStudents() {
 		boolean status = service.deleteAllStudents();
 		Response response = GetResponse.forOk(status);
+		return response;
+	}
+	
+	@GET
+	@Path("/{prn}/results")
+	public Response getAllResultsForStudent(@PathParam("prn") int prn) {
+		List<Result> results = new ResultServiceImpl().getAllResultsForStudent(prn);
+		Response response = GetResponse.forFound(results.toArray(new Result[results.size()]));
 		return response;
 	}
 }
