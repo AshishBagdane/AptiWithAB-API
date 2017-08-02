@@ -7,6 +7,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,7 +31,7 @@ public class ResultResource {
 	
 	@GET
 	@Path("/{resultId}")
-	public Response getResultFor(long resultId) {
+	public Response getResultFor(@PathParam("resultId") long resultId) {
 		Result result = service.getResultFor(resultId);
 		Response response = GetResponse.forFound(result);
 		return response;
@@ -59,7 +60,7 @@ public class ResultResource {
 	
 	@DELETE
 	@Path("/{resultId}")
-	public Response deleteResultFor(long resultId) {
+	public Response deleteResultFor(@PathParam("resultId") long resultId) {
 		Result result = service.deleteResultFor(resultId);
 		Response response = GetResponse.forFound(result);
 		return response;
