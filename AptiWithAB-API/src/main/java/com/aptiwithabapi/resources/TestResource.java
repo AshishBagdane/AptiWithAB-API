@@ -35,7 +35,7 @@ public class TestResource {
 	@GET
 	public Response getAllTests() {
 		List<Test> tests = service.getAllTets();
-		Response response = GetResponse.forFound(tests);
+		Response response = GetResponse.forFound(tests.toArray(new Test[tests.size()]));
 		return response;
 	}
 	
@@ -82,7 +82,7 @@ public class TestResource {
 		return new ScheduleResource();
 	}
 	
-	@Path("/{testId}/fetch")
+	@Path("/{testId}/questions")
 	public FetchQuestionResource getFetchQuestionResource() {
 		return new FetchQuestionResource();
 	}

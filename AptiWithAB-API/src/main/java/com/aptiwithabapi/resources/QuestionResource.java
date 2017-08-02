@@ -75,7 +75,7 @@ public class QuestionResource {
 		return response;
 	}
 	
-	@Path("/options")
+	@Path("/{qnumber}/options")
 	public OptionResource getOptionResource() {
 		return new OptionResource();
 	}
