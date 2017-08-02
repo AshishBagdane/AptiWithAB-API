@@ -1,7 +1,6 @@
 package com.aptiwithabapi.daos;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,7 +104,7 @@ public class ResultDaoImpl implements ResultDao {
 	@Override
 	public Result create(Result result) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO RESULT VALUES (result_seq.NEXTVAL, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO RESULT VALUES (result_seq.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
 		Result createdResult = null;
 		try (Connection connection = DatabaseConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -113,7 +112,6 @@ public class ResultDaoImpl implements ResultDao {
 			statement.setLong(2, result.getTestId());
 			statement.setDouble(3, result.getMarks());
 			statement.setString(4, result.getGrade());
-			statement.setDate(5, (Date) result.getDate());
 			if (statement.executeUpdate() > 0) {
 				createdResult = result;
 			}
